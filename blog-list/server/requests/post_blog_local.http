@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: Bearer x
+
+{
+  "title": "Need login?",
+  "author": "Me",
+  "url": "42",
+  "likes": 17
+}
