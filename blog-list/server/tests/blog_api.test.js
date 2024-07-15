@@ -140,7 +140,7 @@ describe('blogApi', () => {
         title: 'A boring blog post',
         author: 'Anonymous',
         url: 'http://example.com/boring',
-      // no likes sent
+        // no likes sent
       }
 
       // Post a new blog

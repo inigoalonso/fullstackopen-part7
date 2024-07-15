@@ -66,13 +66,13 @@ describe('Blog app', () => {
     catch (error) {
       console.error(error)
     }
-  
+
     await expect(page.getByTestId('notification')).toHaveText('Test User logged-in')
   })
 
   test('invalid user cannot login', async ({ page }) => {
     await loginWith(page, 'tester', 'wrong')
-  
+
     await expect(page.getByText('wrong username or password')).toBeVisible()
   })
 
