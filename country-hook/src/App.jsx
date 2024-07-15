@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import axios, { isAxiosError } from "axios"
 
 const useField = (type) => {
   const [value, setValue] = useState('')
@@ -18,7 +18,28 @@ const useField = (type) => {
 const useCountry = (name) => {
   const [country, setCountry] = useState(null)
 
-  useEffect(() => {})
+  useEffect(() => {
+    const findCountry = async (name) => {
+      try {
+        if (name) {
+          const response = await axios.get(
+            `https://studies.cs.helsinki.fi/restcountries/api/name/${name}`
+          )
+          if (response.status === 200) {
+            const foundCountry = response.data
+            setCountry({ data: foundCountry, found: true })
+            console.log('foundCountry', foundCountry)
+          }
+        }
+      } catch (error) {
+        if (isAxiosError(error) && error.response.status === 404) {
+          setCountry({ found: false })
+          console.log('country not found')
+        }
+      }
+    }
+    findCountry(name)
+  }, [name])
 
   return country
 }
@@ -38,10 +59,10 @@ const Country = ({ country }) => {
 
   return (
     <div>
-      <h3>{country.data.name} </h3>
+      <h3>{country.data.name.official} ({country.data.name.common})</h3>
       <div>capital {country.data.capital} </div>
       <div>population {country.data.population}</div> 
-      <img src={country.data.flag} height='100' alt={`flag of ${country.data.name}`}/>  
+      <img src={country.data.flags.svg} height='100' alt={`flag of ${country.data.name.common}`}/>  
     </div>
   )
 }
