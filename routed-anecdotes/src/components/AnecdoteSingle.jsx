@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types';
 
 const AnecdoteSingle = ({anecdote}) => {
+  if (!anecdote) {
+    return <div>No anecdote with that id available</div>;
+  }
   return (
       <div>
           <h2>{anecdote.content}</h2>
@@ -11,7 +14,11 @@ const AnecdoteSingle = ({anecdote}) => {
 }
 
 AnecdoteSingle.propTypes = {
-  anecdote: PropTypes.object.isRequired
-};
+  anecdote: PropTypes.shape({
+    content: PropTypes.string,
+    votes: PropTypes.number,
+    info: PropTypes.string
+  })
+}
 
 export default AnecdoteSingle
